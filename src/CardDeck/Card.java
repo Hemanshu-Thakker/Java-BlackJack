@@ -10,7 +10,7 @@ public class Card {
 
     }
 
-    Card(Suit suitName, Integer value){
+    public Card(Suit suitName, Integer value){
         this.suitName=suitName;
         this.value=value;
     }
