@@ -30,6 +30,9 @@ public class StartTest {
         deck= new ArrayList<>();
     }
 
+    /**
+     * In this testcase the player wins the game by receiving a perfect BlackJack(21) in the beginning.
+     */
     @org.junit.Test
     public void test_PlayerWinOfBlackJack(){
         deck.add(new Card(Suit.Club ,10));   //player
@@ -45,28 +48,70 @@ public class StartTest {
         Assert.assertEquals(Status.Players_wins,start.getGameStatus());
     }
 
+    /**
+     * In this testcase the player wins the game by receiving a hand value of 20 and bursting the dealer
+     */
+    @org.junit.Test
+    public void test_PlayerWin(){
+        deck.add(new Card(Suit.Club ,2));   //player
+        deck.add(new Card(Suit.Diamond, 10));   //dealer
+        deck.add(new Card(Suit.Spade, 11));  //player
+        deck.add(new Card(Suit.Heart, 8));   //dealer
+        deck.add(new Card(Suit.Diamond, 7));    //player
+        deck.add(new Card(Suit.Heart, 9));  //dealer
 
-//    @org.junit.Test
-//    public void test_checkBetValidity() {
-//    }
-//
-//    @org.junit.Test
-//    public void checkBlackJack() {
-//    }
-//
-//    @org.junit.Test
-//    public void playerHandValue() {
-//    }
-//
-//    @org.junit.Test
-//    public void dealerHandValue() {
-//    }
-//
-//    @org.junit.Test
-//    public void checkPlayerHandValue() {
-//    }
-//
-//    @org.junit.Test
-//    public void checkDealerHandValue() {
-//    }
+        Start start= new Start(player,dealer,deck,table);
+        Assert.assertTrue(start.checkBetValidity());
+        start.deal();
+        Assert.assertFalse(start.checkBlackJack());
+        start.hit();
+        Assert.assertEquals(20,start.playerHandValue());
+        start.stand();
+        Assert.assertEquals(Status.Players_wins,start.getGameStatus());
+    }
+
+    /**
+     * In this testcase the dealer wins by scoring the hand value greater than players hand value and lesser than 21
+     */
+    @org.junit.Test
+    public void test_dealerWin(){
+
+        deck.add(new Card(Suit.Club ,2));   //player
+        deck.add(new Card(Suit.Diamond, 10));   //dealer
+        deck.add(new Card(Suit.Spade, 5));  //player
+        deck.add(new Card(Suit.Heart, 8));   //dealer
+        deck.add(new Card(Suit.Diamond, 7));    //player
+        deck.add(new Card(Suit.Heart, 9));  //dealer
+
+        Start start= new Start(player,dealer,deck,table);
+        Assert.assertTrue(start.checkBetValidity());
+        start.deal();
+        Assert.assertFalse(start.checkBlackJack());
+        start.hit();
+        Assert.assertEquals(14,start.playerHandValue());
+        start.stand();
+        Assert.assertEquals(Status.Dealer_wins,start.getGameStatus());
+    }
+
+    /**
+     * In this testcase the dealer wins since the player burst on hit
+     */
+    @org.junit.Test
+    public void test_dealerWinPlayerBurst(){
+
+        deck.add(new Card(Suit.Club ,9));   //player
+        deck.add(new Card(Suit.Diamond, 10));   //dealer
+        deck.add(new Card(Suit.Spade, 5));  //player
+        deck.add(new Card(Suit.Heart, 8));   //dealer
+        deck.add(new Card(Suit.Diamond, 10));    //player
+        deck.add(new Card(Suit.Heart, 9));  //dealer
+
+        Start start= new Start(player,dealer,deck,table);
+        Assert.assertTrue(start.checkBetValidity());
+        start.deal();
+        Assert.assertFalse(start.checkBlackJack());
+        start.hit();
+        Assert.assertEquals(24,start.playerHandValue());
+        Assert.assertEquals(Status.Dealer_wins,start.getGameStatus());
+    }
 }

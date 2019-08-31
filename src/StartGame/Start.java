@@ -78,6 +78,9 @@ public class Start {
     /*    The hit function is responsible to distribute a card to the player     */
     public void hit(){
         playerCard.add(deck.remove(0));
+        if(playerHandValue() > 21){
+            gameStatus=Status.Dealer_wins;
+        }
     }
 
     /*    The stand function distribute cards till he wins or loses     */
