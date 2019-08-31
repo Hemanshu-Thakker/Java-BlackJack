@@ -11,7 +11,8 @@ public class Deck {
 
     Deck(){
         deck=new ArrayList<>();
-        values= new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,10,10,10,11));
+        values= new ArrayList<>(Arrays.asList(2,3,4,5,6,7,8,9,10,10,10,10,11));
+        createDeck();
     }
 
     public void createDeck(){
@@ -26,4 +27,5 @@ public class Deck {
         Collections.shuffle(deck);
         return deck;
     }
+
 }
